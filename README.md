@@ -12,11 +12,11 @@ This is a **Terminal UI (TUI)** application for interacting with an **OBD2 adapt
 ## 🎮 Controls
 
 ```
-↑ ↓  : Move Up / Down
-←    : Go Back
-→ / ENTER: Select Item
-ESC  : Exit Menu
-CTRL+C: Quit Program
+↑ ↓         : Move Up / Down
+←           : Go Back
+→ / ENTER   : Select Item
+ESC         : Exit Menu
+CTRL+C      : Quit Program
 ```
 
 ## 📚 Installation
@@ -24,7 +24,7 @@ CTRL+C: Quit Program
 ### 1. Clone the Repository
 
 ```sh
-git clone https://github.com/yourusername/obd2-tui.git
+git clone https://github.com/lukephelan/obd2-tui.git
 cd obd2-tui
 ```
 
