@@ -6,17 +6,16 @@ type MenuItem struct {
 	IsHeading bool // Non-selectable if true
 }
 
-// Shared application state
 var showLiveData = false
 
 var controlsText = `
 OBD2 Menu Navigation:
 ---------------------
-↑ ↓  : Move Up / Down
-←    : Go Back
-→ / ENTER: Select Item
-ESC  : Exit Menu
-CTRL+C: Quit Program
+↑ ↓       : Move Up / Down
+←         : Go Back
+→ / ENTER : Select Item
+ESC       : Exit Menu
+CTRL+C    : Quit Program
 `
 
 var (
@@ -24,11 +23,6 @@ var (
 	currentMenu   []*MenuItem
 	menuHistory   [][]*MenuItem
 	indexHistory  []int
-
-	// Dummy OBD2 Data
-	rpm     = 750
-	voltage = 12.5
-	speed   = 0
 )
 
 var menu = []*MenuItem{
