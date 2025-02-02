@@ -1,0 +1,32 @@
+# Binaries & Build Artifacts
+/bin/
+/pkg/
+/*.exe
+/*.out
+/*.test
+/*.a
+/*.o
+
+# Logs & Debugging
+*.log
+*.log.*
+
+# Temporary & Cache Files
+/tmp/
+/*.swp
+*.swo
+*.DS_Store
+
+# Go Modules & Dependencies
+/go.sum
+/go/pkg/
+vendor/
+
+# IDE/Editor Config Files
+.vscode/
+.idea/
+*.iml
+
+# Air (Live Reload) Temp Files (Remove if not using Air)
+.air.toml
+.air/
