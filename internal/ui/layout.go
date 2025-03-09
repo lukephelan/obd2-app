@@ -95,8 +95,6 @@ func Layout(g *gocui.Gui) error {
 			return err
 		}
 	}
-
-	UpdateDataView(g)
 	return nil
 }
 
@@ -128,23 +126,23 @@ func RenderMenu(g *gocui.Gui) {
 func UpdateDataView(g *gocui.Gui) {
 	v, err := g.View("data")
 	if err != nil {
-		return // Avoid crashing if the view isn't available
+		log.Println("❌ View 'data' not found. Skipping update.")
+		return
 	}
 	v.Clear()
 
-	// 🚨 Prevent infinite loops by only updating when necessary
 	if state.ShowLiveData {
 		log.Printf("Updating data view (state.ShowLiveData: %t)", state.ShowLiveData)
-
-		// ✅ Only update the relevant data, don't call `UpdateDataView()` inside itself
 		fmt.Fprintln(v, "Fetching live data...")
-
-		// Call mock functions once without looping
-		if state.ReadBatteryVoltage != nil {
-			state.ReadBatteryVoltage()
-		}
-		if state.ReadRPM != nil {
-			state.ReadRPM()
+		if state.SelectedIndex >= 0 && state.SelectedIndex < len(state.CurrentMenu) {
+			selectedMenuItem := state.CurrentMenu[state.SelectedIndex]
+			log.Println("📢 Selected Menu Item:", selectedMenuItem.Name)
+			if selectedMenuItem.Action != nil {
+				selectedMenuItem.Action()
+			}
+		} else {
+			fmt.Fprintln(v, "No valid selection.")
+			log.Println("❓ Invalid selection index:", state.SelectedIndex)
 		}
 	} else {
 		// ✅ Keep controls text when not showing live data

@@ -6,7 +6,7 @@
 /*.test
 /*.a
 /*.o
-/odb2-tui
+/obd2-tui
 /cuitest
 
 # Logs & Debugging
@@ -28,7 +28,3 @@ vendor/
 .vscode/
 .idea/
 *.iml
-
-# Air (Live Reload) Temp Files (Remove if not using Air)
-.air.toml
-.air/

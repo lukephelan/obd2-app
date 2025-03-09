@@ -135,6 +135,7 @@ func main() {
 	defer g.Close()
 
 	g.SetManagerFunc(ui.Layout)
+	ui.UpdateDataView(g)
 
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)

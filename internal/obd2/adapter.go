@@ -65,6 +65,7 @@ func (a *Adapter) SendCommand(cmd string) (string, error) {
 
 // getMockResponse returns fake OBD2 responses when in mock mode
 func getMockResponse(cmd string) string {
+	log.Println("Received command:", cmd)
 	switch cmd {
 	case "ATRV":
 		return "12.6V" // Fake battery voltage
