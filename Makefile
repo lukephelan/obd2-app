@@ -21,13 +21,9 @@ clean:
 rebuild: clean build
 
 # Run unit tests
-.PHONY: test
-test:
-	go test ./...
-
 .PHONY: test coverage
 test:
-	go test -v ./...
+	go test ./...
 
 coverage:
 	go test -coverprofile=coverage.out ./... && go tool cover -func=coverage.out
