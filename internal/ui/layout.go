@@ -9,15 +9,13 @@ import (
 	"github.com/lukephelan/obd2-tui/internal/state"
 )
 
-// Reference to the global adapter and GUI instance
 var adapter *obd2.Adapter
-var guiInstance *gocui.Gui // ✅ Store reference to gocui instance
+var guiInstance *gocui.Gui
 
 func SetAdapter(a *obd2.Adapter) {
 	adapter = a
 }
 
-// GetGuiInstance returns the current GUI instance
 func GetGuiInstance() *gocui.Gui {
 	return guiInstance
 }
@@ -37,7 +35,6 @@ func UpdateBatteryVoltage(g *gocui.Gui) {
 		return
 	}
 
-	// ✅ Do NOT call UpdateDataView() again here
 	DisplayMessage(g, fmt.Sprintf("Battery Voltage: %.2fV", voltage))
 }
 
@@ -73,7 +70,7 @@ func DisplayMessage(g *gocui.Gui, msg string) {
 }
 
 func Layout(g *gocui.Gui) error {
-	guiInstance = g // ✅ Store GUI instance
+	guiInstance = g
 	maxX, maxY := g.Size()
 
 	// Create Menu View
@@ -145,7 +142,6 @@ func UpdateDataView(g *gocui.Gui) {
 			log.Println("❓ Invalid selection index:", state.SelectedIndex)
 		}
 	} else {
-		// ✅ Keep controls text when not showing live data
 		fmt.Fprintln(v, state.ControlsText)
 	}
 }

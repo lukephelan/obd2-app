@@ -10,7 +10,7 @@ import (
 
 type Adapter struct {
 	port   *serial.Port
-	isMock bool // Flag for mock mode
+	isMock bool
 }
 
 // NewAdapter opens a serial connection to the OBD2 adapter

@@ -123,7 +123,7 @@ func main() {
 	defer adapter.Close()  // Ensure cleanup on exit
 	ui.SetAdapter(adapter) // Pass the adapter to UI
 
-	// Assign function pointers in `state` to avoid import loops
+	// TODO: This needs to be scalable
 	state.ReadBatteryVoltage = func() { ui.UpdateBatteryVoltage(ui.GetGuiInstance()) }
 	state.ReadRPM = func() { ui.UpdateRPM(ui.GetGuiInstance()) }
 

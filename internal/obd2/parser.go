@@ -9,7 +9,6 @@ import (
 
 // ParseBatteryVoltage extracts the battery voltage from an OBD2 response
 func ParseBatteryVoltage(response string) (float64, error) {
-	// Trim spaces and newlines
 	response = strings.TrimSpace(response)
 
 	// Validate that the response ends with 'V' (e.g., "12.5V")
@@ -45,7 +44,6 @@ func ParseRPM(response string) (int, error) {
 		return 0, fmt.Errorf("unexpected response: mode=%X, pid=%X", mode, pid)
 	}
 
-	// RPM = ((A * 256) + B) / 4
 	rpm := ((int(A) * 256) + int(B)) / 4
 	return rpm, nil
 }
