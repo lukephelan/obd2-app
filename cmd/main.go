@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/jroimartin/gocui"
+	"github.com/lukephelan/obd2-tui/internal/state"
+	"github.com/lukephelan/obd2-tui/internal/ui"
 )
 
 var logFile *os.File
@@ -21,55 +23,55 @@ func init() {
 
 func moveSelection(g *gocui.Gui, delta int) error {
 	for {
-		selectedIndex = (selectedIndex + delta + len(currentMenu)) % len(currentMenu)
-		if !currentMenu[selectedIndex].IsHeading {
+		state.SelectedIndex = (state.SelectedIndex + delta + len(state.CurrentMenu)) % len(state.CurrentMenu)
+		if !state.CurrentMenu[state.SelectedIndex].IsHeading {
 			break
 		}
 	}
-	renderMenu(g)
+	ui.RenderMenu(g)
 	return nil
 }
 
 func enterMenu(g *gocui.Gui) error {
-	item := currentMenu[selectedIndex]
+	item := state.CurrentMenu[state.SelectedIndex]
 
 	if item.SubMenu != nil {
 		// Save current menu state before navigating deeper
-		menuHistory = append(menuHistory, currentMenu)
-		indexHistory = append(indexHistory, selectedIndex)
+		state.MenuHistory = append(state.MenuHistory, state.CurrentMenu)
+		state.IndexHistory = append(state.IndexHistory, state.SelectedIndex)
 
 		// Enter submenu
-		currentMenu = item.SubMenu
-		selectedIndex = 0 // Reset selection
+		state.CurrentMenu = item.SubMenu
+		state.SelectedIndex = 0 // Reset selection
 
 		// Ensure we don't land on a heading
-		for selectedIndex < len(currentMenu) && currentMenu[selectedIndex].IsHeading {
-			selectedIndex++ // Move to first non-heading item
+		for state.SelectedIndex < len(state.CurrentMenu) && state.CurrentMenu[state.SelectedIndex].IsHeading {
+			state.SelectedIndex++ // Move to first non-heading item
 		}
 
-		showLiveData = false
+		state.ShowLiveData = false
 
 	} else {
-		showLiveData = true
+		state.ShowLiveData = true
 	}
-	renderMenu(g)
-	updateDataView(g)
+	ui.RenderMenu(g)
+	ui.UpdateDataView(g)
 	return nil
 }
 
 func exitMenu(g *gocui.Gui) error {
-	if len(menuHistory) > 0 {
-		currentMenu = menuHistory[len(menuHistory)-1]
-		selectedIndex = indexHistory[len(indexHistory)-1]
+	if len(state.MenuHistory) > 0 {
+		state.CurrentMenu = state.MenuHistory[len(state.MenuHistory)-1]
+		state.SelectedIndex = state.IndexHistory[len(state.IndexHistory)-1]
 
-		menuHistory = menuHistory[:len(menuHistory)-1]
-		indexHistory = indexHistory[:len(indexHistory)-1]
+		state.MenuHistory = state.MenuHistory[:len(state.MenuHistory)-1]
+		state.IndexHistory = state.IndexHistory[:len(state.IndexHistory)-1]
 
-		showLiveData = false // Restore controls view when going back
+		state.ShowLiveData = false // Restore controls view when going back
 	}
 
-	renderMenu(g)
-	updateDataView(g)
+	ui.RenderMenu(g)
+	ui.UpdateDataView(g)
 	return nil
 }
 
@@ -126,7 +128,7 @@ func main() {
 	}
 	defer g.Close()
 
-	g.SetManagerFunc(layout)
+	g.SetManagerFunc(ui.Layout)
 
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)

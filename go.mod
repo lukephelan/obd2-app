@@ -1,4 +1,4 @@
-module cuitest
+module github.com/lukephelan/obd2-tui
 
 go 1.23.5
 
