@@ -8,8 +8,14 @@ import (
 	"github.com/tarm/serial"
 )
 
+type SerialPort interface {
+	Write(p []byte) (n int, err error)
+	Read(p []byte) (n int, err error)
+	Close() error
+}
+
 type Adapter struct {
-	port   *serial.Port
+	port   SerialPort
 	isMock bool
 }
 
@@ -22,7 +28,7 @@ func NewAdapter(portName string) (*Adapter, error) {
 		return &Adapter{isMock: true}, nil
 	}
 	log.Println("✅ Connected to OBD2 adapter:", portName)
-	return &Adapter{port: port, isMock: false}, nil
+	return &Adapter{port: SerialPort(port), isMock: false}, nil
 }
 
 // Close closes the connection to the OBD2 adapter
