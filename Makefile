@@ -24,3 +24,10 @@ rebuild: clean build
 .PHONY: test
 test:
 	go test ./...
+
+.PHONY: test coverage
+test:
+	go test -v ./...
+
+coverage:
+	go test -coverprofile=coverage.out ./... && go tool cover -func=coverage.out

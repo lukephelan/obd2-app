@@ -52,6 +52,8 @@ If you have `make` installed, use:
 make build      # Compiles the binary
 make run        # Runs the application
 make clean      # Removes build artifacts
+make test       # Runs unit tests
+make coverage   # Runs unit tests and provides a coverage report
 ```
 
 #### Manual Build (Without Make)
