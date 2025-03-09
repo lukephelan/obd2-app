@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/jroimartin/gocui"
 )
@@ -15,8 +16,6 @@ func layout(g *gocui.Gui) error {
 			return err
 		}
 		v.Title = " OBD2 Menu "
-		v.Highlight = true
-		v.SelFgColor = gocui.ColorGreen
 		v.Wrap = true
 		renderMenu(g)
 		if _, err := g.SetCurrentView("menu"); err != nil {
@@ -32,7 +31,6 @@ func layout(g *gocui.Gui) error {
 	}
 
 	updateDataView(g)
-
 	return nil
 }
 
@@ -42,21 +40,27 @@ func renderMenu(g *gocui.Gui) {
 		return
 	}
 	v.Clear()
+
+	fmt.Fprint(v, "\x1b[0m")
+
 	for i, item := range currentMenu {
 		prefix := "  "
-		if i == selectedIndex {
-			prefix = "→ "
-		}
 
 		if item.IsHeading {
-			fmt.Fprintln(v, fmt.Sprintf("── %s ──", item.Name))
+			// Print subheading in green
+			fmt.Fprintf(v, "\x1b[32m──%s──\x1b[0m\n", item.Name)
+		} else if i == selectedIndex || (i == 0 && selectedIndex == 0) {
+			// Ensure highlight is always applied, even on first render
+			fmt.Fprintf(v, "\x1b[0m\x1b[7m%s%s\x1b[0m\n", prefix, item.Name)
 		} else {
-			fmt.Fprintln(v, prefix+item.Name)
+			// Normal menu items
+			fmt.Fprintf(v, "\x1b[0m%s%s\n", prefix, item.Name)
 		}
 	}
 }
 
 func updateDataView(g *gocui.Gui) {
+	log.Printf("Updating data view (showLiveData: %t)", showLiveData)
 	v, err := g.View("data")
 	if err != nil {
 		return // Avoid crashing if the view isn't available
@@ -64,10 +68,9 @@ func updateDataView(g *gocui.Gui) {
 	v.Clear()
 
 	if showLiveData {
-		// Display OBD2 live data
-		fmt.Fprintf(v, " RPM: %d\n", rpm)
-		fmt.Fprintf(v, " Voltage: %.1fV\n", voltage)
-		fmt.Fprintf(v, " Speed: %dkm/h\n", speed)
+		// Display placeholder until real OBD2 integration
+		fmt.Fprintln(v, "🚧 Not Yet Implemented 🚧")
+		fmt.Fprintln(v, "This feature will be available in a future update.")
 	} else {
 		fmt.Fprintln(v, controlsText)
 	}

@@ -2,9 +2,22 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/jroimartin/gocui"
 )
+
+var logFile *os.File
+
+func init() {
+	var err error
+	logFile, err = os.OpenFile("debug.log", os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+	if err != nil {
+		log.Fatal("Failed to open log file:", err)
+	}
+	log.SetOutput(logFile)
+	log.Println("===== Application Started =====")
+}
 
 func moveSelection(g *gocui.Gui, delta int) error {
 	for {
@@ -19,18 +32,26 @@ func moveSelection(g *gocui.Gui, delta int) error {
 
 func enterMenu(g *gocui.Gui) error {
 	item := currentMenu[selectedIndex]
+
 	if item.SubMenu != nil {
-		// Navigating into a submenu
+		// Save current menu state before navigating deeper
 		menuHistory = append(menuHistory, currentMenu)
 		indexHistory = append(indexHistory, selectedIndex)
+
+		// Enter submenu
 		currentMenu = item.SubMenu
-		selectedIndex = 0
-		showLiveData = false // Keep coontrols view when entering a submenu
+		selectedIndex = 0 // Reset selection
+
+		// Ensure we don't land on a heading
+		for selectedIndex < len(currentMenu) && currentMenu[selectedIndex].IsHeading {
+			selectedIndex++ // Move to first non-heading item
+		}
+
+		showLiveData = false
+
 	} else {
-		// Selecting an actual option → Switch to OBD2 data
 		showLiveData = true
 	}
-
 	renderMenu(g)
 	updateDataView(g)
 	return nil
