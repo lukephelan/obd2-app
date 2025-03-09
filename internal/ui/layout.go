@@ -130,12 +130,17 @@ func UpdateDataView(g *gocui.Gui) {
 
 	if state.ShowLiveData {
 		log.Printf("Updating data view (state.ShowLiveData: %t)", state.ShowLiveData)
-		fmt.Fprintln(v, "Fetching live data...")
 		if state.SelectedIndex >= 0 && state.SelectedIndex < len(state.CurrentMenu) {
 			selectedMenuItem := state.CurrentMenu[state.SelectedIndex]
 			log.Println("📢 Selected Menu Item:", selectedMenuItem.Name)
 			if selectedMenuItem.Action != nil {
+				fmt.Fprintln(v, "Fetching live data...")
 				selectedMenuItem.Action()
+			} else {
+				// Display placeholder until real OBD2 integration
+				fmt.Fprintln(v, "🚧  Not Yet Implemented 🚧")
+				fmt.Fprintln(v, "")
+				fmt.Fprintln(v, "This feature will be available in a future update.")
 			}
 		} else {
 			fmt.Fprintln(v, "No valid selection.")
