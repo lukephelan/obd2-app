@@ -6,10 +6,13 @@
 /*.test
 /*.a
 /*.o
+/obd2-tui
+/cuitest
 
 # Logs & Debugging
 *.log
 *.log.*
+/notes.txt
 
 # Temporary & Cache Files
 /tmp/
@@ -26,7 +29,3 @@ vendor/
 .vscode/
 .idea/
 *.iml
-
-# Air (Live Reload) Temp Files (Remove if not using Air)
-.air.toml
-.air/

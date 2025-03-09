@@ -42,12 +42,25 @@ Then install dependencies:
 go mod tidy
 ```
 
-### 3. Run the App
+### 3. Build & Run the Application
 
-Run the application with:
+#### Using Makefile (Recommended)
+
+If you have `make` installed, use:
 
 ```sh
-go run ./cmd
+make build      # Compiles the binary
+make run        # Runs the application
+make clean      # Removes build artifacts
+```
+
+#### Manual Build (Without Make)
+
+If you don’t have `make`, you can build manually:
+
+```sh
+go build -o obd2-tui ./cmd
+./obd2-tui
 ```
 
 ## 🛠 Future Improvements

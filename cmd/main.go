@@ -5,11 +5,13 @@ import (
 	"os"
 
 	"github.com/jroimartin/gocui"
+	"github.com/lukephelan/obd2-tui/internal/obd2"
 	"github.com/lukephelan/obd2-tui/internal/state"
 	"github.com/lukephelan/obd2-tui/internal/ui"
 )
 
 var logFile *os.File
+var adapter *obd2.Adapter
 
 func init() {
 	var err error
@@ -111,6 +113,21 @@ func keybindings(g *gocui.Gui) error {
 }
 
 func main() {
+	// Try connecting to the OBD2 adapter
+	var err error
+	adapter, err = obd2.NewAdapter("/dev/ttyUSB0") // Change port if needed
+	if err != nil {
+		log.Panicln("❌ Failed to initialize OBD2 adapter:", err)
+	}
+
+	defer adapter.Close()  // Ensure cleanup on exit
+	ui.SetAdapter(adapter) // Pass the adapter to UI
+
+	// TODO: This needs to be scalable
+	state.ReadBatteryVoltage = func() { ui.UpdateBatteryVoltage(ui.GetGuiInstance()) }
+	state.ReadRPM = func() { ui.UpdateRPM(ui.GetGuiInstance()) }
+
+	// Start TUI
 	g, err := gocui.NewGui(gocui.OutputNormal)
 	if err != nil {
 		log.Panicln(err)
@@ -118,6 +135,7 @@ func main() {
 	defer g.Close()
 
 	g.SetManagerFunc(ui.Layout)
+	ui.UpdateDataView(g)
 
 	if err := keybindings(g); err != nil {
 		log.Panicln(err)

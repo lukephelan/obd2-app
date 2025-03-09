@@ -5,10 +5,72 @@ import (
 	"log"
 
 	"github.com/jroimartin/gocui"
+	"github.com/lukephelan/obd2-tui/internal/obd2"
 	"github.com/lukephelan/obd2-tui/internal/state"
 )
 
+var adapter *obd2.Adapter
+var guiInstance *gocui.Gui
+
+func SetAdapter(a *obd2.Adapter) {
+	adapter = a
+}
+
+func GetGuiInstance() *gocui.Gui {
+	return guiInstance
+}
+
+// Fetch battery voltage and update UI
+func UpdateBatteryVoltage(g *gocui.Gui) {
+	if adapter == nil {
+		log.Println("⚠️ No OBD2 adapter available.")
+		DisplayMessage(g, "Battery Voltage: N/A")
+		return
+	}
+
+	voltage, err := adapter.GetBatteryVoltage()
+	if err != nil {
+		log.Println("❌ Failed to get battery voltage:", err)
+		DisplayMessage(g, "Battery Voltage: N/A")
+		return
+	}
+
+	DisplayMessage(g, fmt.Sprintf("Battery Voltage: %.2fV", voltage))
+}
+
+// Fetch RPM and update UI
+func UpdateRPM(g *gocui.Gui) {
+	if adapter == nil {
+		log.Println("⚠️ No OBD2 adapter available.")
+		DisplayMessage(g, "Engine RPM: N/A")
+		return
+	}
+
+	rpm, err := adapter.GetRPM()
+	if err != nil {
+		log.Println("❌ Failed to get RPM:", err)
+		DisplayMessage(g, "Engine RPM: N/A")
+		return
+	}
+
+	DisplayMessage(g, fmt.Sprintf("Engine RPM: %d", rpm))
+}
+
+// Display a message in the "data" view
+func DisplayMessage(g *gocui.Gui, msg string) {
+	g.Update(func(g *gocui.Gui) error {
+		v, err := g.View("data")
+		if err != nil {
+			return err
+		}
+		v.Clear()
+		fmt.Fprintln(v, msg)
+		return nil
+	})
+}
+
 func Layout(g *gocui.Gui) error {
+	guiInstance = g
 	maxX, maxY := g.Size()
 
 	// Create Menu View
@@ -30,8 +92,6 @@ func Layout(g *gocui.Gui) error {
 			return err
 		}
 	}
-
-	UpdateDataView(g)
 	return nil
 }
 
@@ -61,17 +121,26 @@ func RenderMenu(g *gocui.Gui) {
 }
 
 func UpdateDataView(g *gocui.Gui) {
-	log.Printf("Updating data view (state.ShowLiveData: %t)", state.ShowLiveData)
 	v, err := g.View("data")
 	if err != nil {
-		return // Avoid crashing if the view isn't available
+		log.Println("❌ View 'data' not found. Skipping update.")
+		return
 	}
 	v.Clear()
 
 	if state.ShowLiveData {
-		// Display placeholder until real OBD2 integration
-		fmt.Fprintln(v, "🚧 Not Yet Implemented 🚧")
-		fmt.Fprintln(v, "This feature will be available in a future update.")
+		log.Printf("Updating data view (state.ShowLiveData: %t)", state.ShowLiveData)
+		fmt.Fprintln(v, "Fetching live data...")
+		if state.SelectedIndex >= 0 && state.SelectedIndex < len(state.CurrentMenu) {
+			selectedMenuItem := state.CurrentMenu[state.SelectedIndex]
+			log.Println("📢 Selected Menu Item:", selectedMenuItem.Name)
+			if selectedMenuItem.Action != nil {
+				selectedMenuItem.Action()
+			}
+		} else {
+			fmt.Fprintln(v, "No valid selection.")
+			log.Println("❓ Invalid selection index:", state.SelectedIndex)
+		}
 	} else {
 		fmt.Fprintln(v, state.ControlsText)
 	}
