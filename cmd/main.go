@@ -21,17 +21,6 @@ func init() {
 	log.Println("===== Application Started =====")
 }
 
-func moveSelection(g *gocui.Gui, delta int) error {
-	for {
-		state.SelectedIndex = (state.SelectedIndex + delta + len(state.CurrentMenu)) % len(state.CurrentMenu)
-		if !state.CurrentMenu[state.SelectedIndex].IsHeading {
-			break
-		}
-	}
-	ui.RenderMenu(g)
-	return nil
-}
-
 func enterMenu(g *gocui.Gui) error {
 	item := state.CurrentMenu[state.SelectedIndex]
 
@@ -77,13 +66,13 @@ func exitMenu(g *gocui.Gui) error {
 
 func keybindings(g *gocui.Gui) error {
 	if err := g.SetKeybinding("menu", gocui.KeyArrowUp, gocui.ModNone, func(g *gocui.Gui, v *gocui.View) error {
-		return moveSelection(g, -1)
+		return ui.MoveSelection(g, -1)
 	}); err != nil {
 		return err
 	}
 
 	if err := g.SetKeybinding("menu", gocui.KeyArrowDown, gocui.ModNone, func(g *gocui.Gui, v *gocui.View) error {
-		return moveSelection(g, 1)
+		return ui.MoveSelection(g, 1)
 	}); err != nil {
 		return err
 	}

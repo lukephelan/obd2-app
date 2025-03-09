@@ -47,7 +47,7 @@ go mod tidy
 Run the application with:
 
 ```sh
-go run .
+go run ./cmd
 ```
 
 ## 🛠 Future Improvements

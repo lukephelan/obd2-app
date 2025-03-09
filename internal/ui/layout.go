@@ -76,3 +76,14 @@ func UpdateDataView(g *gocui.Gui) {
 		fmt.Fprintln(v, state.ControlsText)
 	}
 }
+
+func MoveSelection(g *gocui.Gui, delta int) error {
+	for {
+		state.SelectedIndex = (state.SelectedIndex + delta + len(state.CurrentMenu)) % len(state.CurrentMenu)
+		if !state.CurrentMenu[state.SelectedIndex].IsHeading {
+			break
+		}
+	}
+	RenderMenu(g)
+	return nil
+}
