@@ -4,6 +4,7 @@ type MenuItem struct {
 	Name      string
 	SubMenu   []*MenuItem
 	IsHeading bool // Non-selectable if true
+	Action    func()
 }
 
 var ShowLiveData = false
@@ -19,10 +20,12 @@ CTRL+C    : Quit Program
 `
 
 var (
-	SelectedIndex = 0
-	CurrentMenu   []*MenuItem
-	MenuHistory   [][]*MenuItem
-	IndexHistory  []int
+	SelectedIndex      = 0
+	CurrentMenu        []*MenuItem
+	MenuHistory        [][]*MenuItem
+	IndexHistory       []int
+	ReadBatteryVoltage func()
+	ReadRPM            func()
 )
 
 var menu = []*MenuItem{
@@ -37,7 +40,17 @@ var menu = []*MenuItem{
 	}},
 	{Name: "Live Sensor Data", SubMenu: []*MenuItem{
 		{Name: "Engine & Performance", IsHeading: true},
-		{Name: "Engine RPM"},
+		{Name: "Battery Voltage", Action: func() {
+			if ReadBatteryVoltage != nil {
+				ReadBatteryVoltage()
+			}
+		}},
+
+		{Name: "Engine RPM", Action: func() {
+			if ReadRPM != nil {
+				ReadRPM()
+			}
+		}},
 		{Name: "Vehicle Speed"},
 		{Name: "Throttle Position"},
 		{Name: "Mass Air Flow (MAF)"},

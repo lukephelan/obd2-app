@@ -5,10 +5,75 @@ import (
 	"log"
 
 	"github.com/jroimartin/gocui"
+	"github.com/lukephelan/obd2-tui/internal/obd2"
 	"github.com/lukephelan/obd2-tui/internal/state"
 )
 
+// Reference to the global adapter and GUI instance
+var adapter *obd2.Adapter
+var guiInstance *gocui.Gui // ✅ Store reference to gocui instance
+
+func SetAdapter(a *obd2.Adapter) {
+	adapter = a
+}
+
+// GetGuiInstance returns the current GUI instance
+func GetGuiInstance() *gocui.Gui {
+	return guiInstance
+}
+
+// Fetch battery voltage and update UI
+func UpdateBatteryVoltage(g *gocui.Gui) {
+	if adapter == nil {
+		log.Println("⚠️ No OBD2 adapter available.")
+		DisplayMessage(g, "Battery Voltage: N/A")
+		return
+	}
+
+	voltage, err := adapter.GetBatteryVoltage()
+	if err != nil {
+		log.Println("❌ Failed to get battery voltage:", err)
+		DisplayMessage(g, "Battery Voltage: N/A")
+		return
+	}
+
+	// ✅ Do NOT call UpdateDataView() again here
+	DisplayMessage(g, fmt.Sprintf("Battery Voltage: %.2fV", voltage))
+}
+
+// Fetch RPM and update UI
+func UpdateRPM(g *gocui.Gui) {
+	if adapter == nil {
+		log.Println("⚠️ No OBD2 adapter available.")
+		DisplayMessage(g, "Engine RPM: N/A")
+		return
+	}
+
+	rpm, err := adapter.GetRPM()
+	if err != nil {
+		log.Println("❌ Failed to get RPM:", err)
+		DisplayMessage(g, "Engine RPM: N/A")
+		return
+	}
+
+	DisplayMessage(g, fmt.Sprintf("Engine RPM: %d", rpm))
+}
+
+// Display a message in the "data" view
+func DisplayMessage(g *gocui.Gui, msg string) {
+	g.Update(func(g *gocui.Gui) error {
+		v, err := g.View("data")
+		if err != nil {
+			return err
+		}
+		v.Clear()
+		fmt.Fprintln(v, msg)
+		return nil
+	})
+}
+
 func Layout(g *gocui.Gui) error {
+	guiInstance = g // ✅ Store GUI instance
 	maxX, maxY := g.Size()
 
 	// Create Menu View
@@ -61,18 +126,28 @@ func RenderMenu(g *gocui.Gui) {
 }
 
 func UpdateDataView(g *gocui.Gui) {
-	log.Printf("Updating data view (state.ShowLiveData: %t)", state.ShowLiveData)
 	v, err := g.View("data")
 	if err != nil {
 		return // Avoid crashing if the view isn't available
 	}
 	v.Clear()
 
+	// 🚨 Prevent infinite loops by only updating when necessary
 	if state.ShowLiveData {
-		// Display placeholder until real OBD2 integration
-		fmt.Fprintln(v, "🚧 Not Yet Implemented 🚧")
-		fmt.Fprintln(v, "This feature will be available in a future update.")
+		log.Printf("Updating data view (state.ShowLiveData: %t)", state.ShowLiveData)
+
+		// ✅ Only update the relevant data, don't call `UpdateDataView()` inside itself
+		fmt.Fprintln(v, "Fetching live data...")
+
+		// Call mock functions once without looping
+		if state.ReadBatteryVoltage != nil {
+			state.ReadBatteryVoltage()
+		}
+		if state.ReadRPM != nil {
+			state.ReadRPM()
+		}
 	} else {
+		// ✅ Keep controls text when not showing live data
 		fmt.Fprintln(v, state.ControlsText)
 	}
 }
