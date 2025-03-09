@@ -6,6 +6,8 @@
 /*.test
 /*.a
 /*.o
+/odb2-tui
+/cuitest
 
 # Logs & Debugging
 *.log
