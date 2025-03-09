@@ -1,4 +1,4 @@
-package main
+package state
 
 type MenuItem struct {
 	Name      string
@@ -6,9 +6,9 @@ type MenuItem struct {
 	IsHeading bool // Non-selectable if true
 }
 
-var showLiveData = false
+var ShowLiveData = false
 
-var controlsText = `
+var ControlsText = `
 OBD2 Menu Navigation:
 ---------------------
 ↑ ↓       : Move Up / Down
@@ -19,10 +19,10 @@ CTRL+C    : Quit Program
 `
 
 var (
-	selectedIndex = 0
-	currentMenu   []*MenuItem
-	menuHistory   [][]*MenuItem
-	indexHistory  []int
+	SelectedIndex = 0
+	CurrentMenu   []*MenuItem
+	MenuHistory   [][]*MenuItem
+	IndexHistory  []int
 )
 
 var menu = []*MenuItem{
@@ -82,5 +82,5 @@ var menu = []*MenuItem{
 }
 
 func init() {
-	currentMenu = menu
+	CurrentMenu = menu
 }
