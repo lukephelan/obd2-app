@@ -12,6 +12,7 @@
 # Logs & Debugging
 *.log
 *.log.*
+/notes.txt
 
 # Temporary & Cache Files
 /tmp/
