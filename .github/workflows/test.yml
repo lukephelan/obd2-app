@@ -37,6 +37,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: test
 
