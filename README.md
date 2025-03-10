@@ -65,6 +65,35 @@ go build -o obd2-tui ./cmd
 ./obd2-tui
 ```
 
+## 🔽 Download the Latest Binary
+
+You can download a prebuilt version of `obd2-tui` without needing to install Go.
+
+### **1️⃣ Go to the GitHub Actions Page**
+
+1. Click on the **"Actions"** tab in this repository.
+2. Select **"Build and Upload Binary"** from the list of workflows.
+3. Click on the latest run (usually at the top).
+
+### **2️⃣ Download the Binary**
+
+1. Scroll down to the **"Artifacts"** section.
+2. Click **"obd2-tui-binary"** to download it.
+3. If needed, make it executable:
+   ```sh
+   chmod +x obd2-tui
+   ```
+
+### **3️⃣ Run the App**
+
+Now you can run the app without installing anything:
+
+```sh
+./obd2-tui
+```
+
+🚀 **You're ready to use OBD2-TUI!**
+
 ## 🛠 Future Improvements
 
 - ✅ Add support for reading OBD2 sensor data via USB/Bluetooth
