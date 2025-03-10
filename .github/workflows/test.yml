@@ -25,4 +25,9 @@ jobs:
         run: go mod tidy
 
       - name: Run tests with coverage
-        run: make coverage
+        run: make coverage | tee test_results.txt
+
+      - name: Post test results as PR comment
+        uses: mshick/add-pr-comment@v2
+        with:
+          message-path: test_results.txt
