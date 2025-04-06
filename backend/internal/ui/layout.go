@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/jroimartin/gocui"
-	"github.com/lukephelan/obd2-tui/internal/obd2"
-	"github.com/lukephelan/obd2-tui/internal/state"
+	"github.com/lukephelan/obd2-app/backend/internal/obd2"
+	"github.com/lukephelan/obd2-app/backend/internal/state"
 )
 
 var adapter *obd2.Adapter

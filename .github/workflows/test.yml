@@ -25,10 +25,14 @@ jobs:
           go-version: stable
 
       - name: Install dependencies
-        run: go mod tidy
+        run: |
+          cd backend
+          go mod tidy
 
       - name: Run tests with coverage
-        run: make coverage | tee test_results.txt
+        run: |
+          cd backend
+          make coverage | tee test_results.txt
 
       - name: Post test results as PR comment
         uses: mshick/add-pr-comment@v2

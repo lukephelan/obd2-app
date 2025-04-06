@@ -24,8 +24,8 @@ CTRL+C      : Quit Program
 ### 1. Clone the Repository
 
 ```sh
-git clone https://github.com/lukephelan/obd2-tui.git
-cd obd2-tui
+git clone https://github.com/lukephelan/obd2-app.git
+cd obd2-app
 ```
 
 ### 2. Install Dependencies
@@ -61,13 +61,13 @@ make coverage   # Runs unit tests and provides a coverage report
 If you don’t have `make`, you can build manually:
 
 ```sh
-go build -o obd2-tui ./cmd
-./obd2-tui
+go build -o obd2-app ./cmd
+./obd2-app
 ```
 
 ## 🔽 Download the Latest Binary
 
-You can download a prebuilt version of `obd2-tui` without needing to install Go.
+You can download a prebuilt version of `obd2-app` without needing to install Go.
 
 ### **1️⃣ Go to the GitHub Actions Page**
 
@@ -78,10 +78,10 @@ You can download a prebuilt version of `obd2-tui` without needing to install Go.
 ### **2️⃣ Download the Binary**
 
 1. Scroll down to the **"Artifacts"** section.
-2. Click **"obd2-tui-binary"** to download it.
+2. Click **"obd2-app-binary"** to download it.
 3. If needed, make it executable:
    ```sh
-   chmod +x obd2-tui
+   chmod +x obd2-app
    ```
 
 ### **3️⃣ Run the App**
@@ -89,10 +89,10 @@ You can download a prebuilt version of `obd2-tui` without needing to install Go.
 Now you can run the app without installing anything:
 
 ```sh
-./obd2-tui
+./obd2-app
 ```
 
-🚀 **You're ready to use OBD2-TUI!**
+🚀 **You're ready to use OBD2-APP!**
 
 ## 🛠 Future Improvements
 

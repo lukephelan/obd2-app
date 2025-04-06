@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/jroimartin/gocui"
-	"github.com/lukephelan/obd2-tui/internal/obd2"
-	"github.com/lukephelan/obd2-tui/internal/state"
-	"github.com/lukephelan/obd2-tui/internal/ui"
+	"github.com/lukephelan/obd2-app/backend/internal/obd2"
+	"github.com/lukephelan/obd2-app/backend/internal/state"
+	"github.com/lukephelan/obd2-app/backend/internal/ui"
 )
 
 var logFile *os.File
@@ -115,7 +115,7 @@ func keybindings(g *gocui.Gui) error {
 func main() {
 	// Try connecting to the OBD2 adapter
 	var err error
-	adapter, err = obd2.NewAdapter("/dev/ttyUSB0") // Change port if needed
+	adapter, err = obd2.NewAdapter("/dev/tty.usbserial-A79B4CMW") // FIXME: Need a reusable solution for setting portName
 	if err != nil {
 		log.Panicln("❌ Failed to initialize OBD2 adapter:", err)
 	}
