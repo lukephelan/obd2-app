@@ -1,13 +1,13 @@
 # Binaries & Build Artifacts
-/bin/
-/pkg/
-/*.exe
-/*.out
-/*.test
-/*.a
-/*.o
-/obd2-tui
-/cuitest
+backend/bin/
+backend/pkg/
+backend/*.exe
+backend/*.out
+backend/*.test
+backend/*.a
+backend/*.o
+backend/obd2-tui
+backend/cuitest
 
 # Logs & Debugging
 *.log
@@ -15,18 +15,19 @@
 /notes.txt
 
 # Testing Output
-/coverage.html
-/test_output.tmp
+backend/coverage.html
+backend/test_output.tmp
+backend/test_results.txt
 
 # Temporary & Cache Files
-/tmp/
-/*.swp
-*.swo
+backend/tmp/
+backend/*.swp
+backend/*.swo
 *.DS_Store
 
 # Go Modules & Dependencies
-/go/pkg/
-vendor/
+backend/go/pkg/
+backend/vendor/
 
 # IDE/Editor Config Files
 .vscode/
