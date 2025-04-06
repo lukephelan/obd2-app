@@ -22,10 +22,10 @@ jobs:
       - name: Build the application
         run: |
           cd backend
-          go build -o obd2-tui ./cmd
+          go build -o obd2-app ./cmd
 
       - name: Upload binary as an artifact
         uses: actions/upload-artifact@v4
         with:
-          name: obd2-tui-binary
-          path: ../obd2-tui
+          name: obd2-app-binary
+          path: ../obd2-app

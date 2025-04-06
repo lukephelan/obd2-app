@@ -6,7 +6,7 @@ backend/*.out
 backend/*.test
 backend/*.a
 backend/*.o
-backend/obd2-tui
+backend/obd2-app
 backend/cuitest
 
 # Logs & Debugging

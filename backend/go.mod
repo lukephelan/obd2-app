@@ -1,4 +1,4 @@
-module github.com/lukephelan/obd2-tui
+module github.com/lukephelan/obd2-app
 
 go 1.23.5
 

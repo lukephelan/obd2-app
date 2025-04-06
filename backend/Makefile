@@ -1,5 +1,5 @@
 # Output binary name
-BINARY_NAME = obd2-tui
+BINARY_NAME = obd2-app
 
 # Build the application
 .PHONY: build
