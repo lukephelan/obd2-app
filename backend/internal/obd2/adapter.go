@@ -2,7 +2,9 @@ package obd2
 
 import (
 	"errors"
+	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/tarm/serial"
@@ -21,6 +23,11 @@ type Adapter struct {
 
 // NewAdapter opens a serial connection to the OBD2 adapter
 func NewAdapter(portName string) (*Adapter, error) {
+	// Normalize the input
+	if strings.HasPrefix(portName, "serial://") {
+		portName = strings.TrimPrefix(portName, "serial://")
+	}
+
 	config := &serial.Config{Name: portName, Baud: 9600, ReadTimeout: time.Second * 2}
 	port, err := serial.OpenPort(config)
 	if err != nil {
@@ -52,19 +59,30 @@ func (a *Adapter) SendCommand(cmd string) (string, error) {
 		return "", errors.New("❌ OBD2 adapter is not connected")
 	}
 
-	_, err := a.port.Write([]byte(cmd + "\r")) // Send command with CR
+	_, err := a.port.Write([]byte(cmd + "\r")) // Send command with CR+
 	if err != nil {
 		return "", errors.New("❌ Failed to send command: " + cmd)
 	}
 
-	// Read response
+	// Read response in a loop
+	var response []byte
 	buf := make([]byte, 64)
-	n, err := a.port.Read(buf)
-	if err != nil || n == 0 {
-		return "", errors.New("❌ No response received from OBD2 adapter")
+
+	for {
+		n, err := a.port.Read(buf)
+		if err != nil {
+			return "", fmt.Errorf("error reading from adapter: %w", err)
+		}
+		response = append(response, buf[:n]...)
+
+		// Check for end-of-response condition
+		// (for example, a trailing \r or \n, or a specific pattern you expect)
+		if len(response) > 3 && response[len(response)-1] == '\r' {
+			break
+		}
 	}
 
-	response := string(buf[:n])
-	log.Printf("✅ OBD2 Response: %s", response)
-	return response, nil
+	log.Printf("Raw response: %q", response)
+
+	return string(response), nil
 }

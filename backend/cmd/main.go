@@ -115,7 +115,7 @@ func keybindings(g *gocui.Gui) error {
 func main() {
 	// Try connecting to the OBD2 adapter
 	var err error
-	adapter, err = obd2.NewAdapter("/dev/ttyUSB0") // Change port if needed
+	adapter, err = obd2.NewAdapter("/dev/tty.usbserial-A79B4CMW") // FIXME: Need a reusable solution for setting portName
 	if err != nil {
 		log.Panicln("❌ Failed to initialize OBD2 adapter:", err)
 	}

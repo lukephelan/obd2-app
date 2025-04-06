@@ -1,0 +1,4 @@
+- Can I get general vehicle information?
+- Do I have proper isolation between modules?
+- main() needs to be updated to add all the action functions
+- How to handle different ports depending on device?
