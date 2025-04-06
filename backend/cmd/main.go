@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/jroimartin/gocui"
-	"github.com/lukephelan/obd2-app/internal/obd2"
-	"github.com/lukephelan/obd2-app/internal/state"
-	"github.com/lukephelan/obd2-app/internal/ui"
+	"github.com/lukephelan/obd2-app/backend/internal/obd2"
+	"github.com/lukephelan/obd2-app/backend/internal/state"
+	"github.com/lukephelan/obd2-app/backend/internal/ui"
 )
 
 var logFile *os.File
