@@ -1,0 +1,164 @@
+<div class="flex h-screen bg-gray-100">
+  <aside class="w-64 bg-white shadow-md p-6">
+    <h2 class="text-lg font-bold mb-6">OBD2 App</h2>
+    <nav class="space-y-4">
+      <a
+        routerLink="/home"
+        routerLinkActive="text-indigo-600"
+        class="flex items-center text-gray-700 hover:text-indigo-600"
+      >
+        <svg
+          class="w-5 h-5 mr-2 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 9.75L12 3l9 6.75V19.5a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 19.5V9.75z"
+          />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10" />
+        </svg>
+
+        Home
+      </a>
+
+      <a
+        routerLink="/live"
+        routerLinkActive="text-indigo-600"
+        class="flex items-center text-gray-700 hover:text-indigo-600"
+      >
+        <svg
+          class="w-5 h-5 mr-2 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6m-6 0v6m-6 0h6"
+          />
+        </svg>
+        Live Data
+      </a>
+
+      <a
+        routerLink="/diagnostics"
+        routerLinkActive="text-indigo-600"
+        class="flex items-center text-gray-700 hover:text-indigo-600"
+      >
+        <svg
+          class="w-5 h-5 mr-2 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 9v3m0 3h.01M10.29 3.86a1.7 1.7 0 0 1 3.42 0l7.389 13.722A1.7 1.7 0 0 1 19.389 21H4.611a1.7 1.7 0 0 1-1.611-2.418L10.29 3.86Z"
+          />
+        </svg>
+        Diagnostics
+      </a>
+
+      <a
+        routerLink="/vehicle"
+        routerLinkActive="text-indigo-600"
+        class="flex items-center text-gray-700 hover:text-indigo-600"
+      >
+        <svg
+          class="w-5 h-5 mr-2 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 5.25h16.5v13.5H3.75V5.25zM9 9.75h6M9 12.75h6M6.75 9.75h.008v.008H6.75V9.75zM6.75 12.75h.008v.008H6.75V12.75z"
+          />
+        </svg>
+        Vehicle Info
+      </a>
+
+      <a
+        routerLink="/tests"
+        routerLinkActive="text-indigo-600"
+        class="flex items-center text-gray-700 hover:text-indigo-600"
+      >
+        <svg
+          class="w-5 h-5 mr-2 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 2v6m6-6v6m-6 0v7a4 4 0 0 1-.878 2.512L7 20h10l-1.122-2.488A4 4 0 0 1 15 15V8m-6 0h6"
+          />
+        </svg>
+        Tests
+      </a>
+
+      <a
+        routerLink="/logs"
+        routerLinkActive="text-indigo-600"
+        class="flex items-center text-gray-700 hover:text-indigo-600"
+      >
+        <svg
+          class="w-5 h-5 mr-2 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25h12A2.25 2.25 0 0 0 20.25 18V9M9 3.75A2.25 2.25 0 0 1 11.25 6H15l5.25 5.25M9 3.75V6"
+          />
+        </svg>
+        Logs
+      </a>
+
+      <a
+        routerLink="/settings"
+        routerLinkActive="text-indigo-600"
+        class="flex items-center text-gray-700 hover:text-indigo-600"
+      >
+        <svg
+          class="w-5 h-5 mr-2 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 15.75A3.75 3.75 0 1 0 12 8.25a3.75 3.75 0 0 0 0 7.5z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M19.5 12a7.5 7.5 0 0 0-.54-2.75l1.68-1.68a0.75 0.75 0 0 0-1.06-1.06l-1.68 1.68A7.5 7.5 0 0 0 12 4.5a7.5 7.5 0 0 0-2.75.54L7.57 3.36a0.75 0.75 0 0 0-1.06 1.06l1.68 1.68A7.5 7.5 0 0 0 4.5 12a7.5 7.5 0 0 0 .54 2.75L3.36 16.43a0.75 0.75 0 1 0 1.06 1.06l1.68-1.68A7.5 7.5 0 0 0 12 19.5a7.5 7.5 0 0 0 2.75-.54l1.68 1.68a0.75 0.75 0 0 0 1.06-1.06l-1.68-1.68A7.5 7.5 0 0 0 19.5 12z"
+          />
+        </svg>
+        Settings
+      </a>
+    </nav>
+  </aside>
+
+  <main class="flex-1 p-6 overflow-y-auto">
+    <router-outlet></router-outlet>
+  </main>
+</div>
