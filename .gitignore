@@ -1,35 +1,75 @@
-# Binaries & Build Artifacts
-backend/bin/
-backend/pkg/
-backend/*.exe
-backend/*.out
-backend/*.test
-backend/*.a
-backend/*.o
-backend/obd2-app
-backend/cuitest
+# ─────────────────────────────
+# Go / Backend
+# ─────────────────────────────
 
-# Logs & Debugging
+# Build artifacts & binaries
+/backend/bin/
+/backend/pkg/
+/backend/*.exe
+/backend/*.out
+/backend/*.test
+/backend/*.a
+/backend/*.o
+/backend/obd2-app
+/backend/cuitest
+
+# Coverage & test outputs
+/backend/coverage.html
+/backend/test_output.tmp
+/backend/test_results.txt
+
+# Temp & misc
+/backend/tmp/
+/backend/*.swp
+/backend/*.swo
+
+# Go modules & vendor (rarely needed if using vendoring)
+/backend/go/pkg/
+/backend/vendor/
+
+# ─────────────────────────────
+# Angular / Frontend
+# ─────────────────────────────
+
+# Build outputs
+/frontend/dist/
+/frontend/tmp/
+/frontend/out-tsc/
+/frontend/.angular/
+/frontend/coverage/
+/frontend/bazel-out/
+
+# Dependencies
+/frontend/node_modules/
+
+# Logs
+/frontend/npm-debug.log
+/frontend/yarn-error.log
+/frontend/testem.log
+/frontend/libpeerconnection.log
+/frontend/connect.lock
+
+# Editor / IDE configs
+/frontend/.idea/
+/frontend/.vscode/
+/frontend/.history/
+/frontend/.project
+/frontend/.classpath
+/frontend/.c9/
+/frontend/*.launch
+/frontend/.settings/
+/frontend/*.sublime-workspace
+
+# Tool-specific
+/frontend/.sass-cache
+/frontend/typings
+
+# ─────────────────────────────
+# Global
+# ─────────────────────────────
+
 *.log
 *.log.*
-/notes.txt
-
-# Testing Output
-backend/coverage.html
-backend/test_output.tmp
-backend/test_results.txt
-
-# Temporary & Cache Files
-backend/tmp/
-backend/*.swp
-backend/*.swo
 *.DS_Store
-
-# Go Modules & Dependencies
-backend/go/pkg/
-backend/vendor/
-
-# IDE/Editor Config Files
-.vscode/
-.idea/
-*.iml
+/notes.txt
+/Thumbs.db
