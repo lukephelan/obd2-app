@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { AppButtonComponent } from '../app-button/app-button.component';
 
 @Component({
   selector: 'app-settings',
-  imports: [],
+  imports: [AppButtonComponent],
   templateUrl: './settings.component.html',
-  styleUrl: './settings.component.css'
+  styleUrl: './settings.component.css',
 })
-export class SettingsComponent {
-
-}
+export class SettingsComponent {}
