@@ -2,22 +2,35 @@
 
 <section class="mb-6">
   <h3 class="text-lg font-medium mb-2">Connection</h3>
-  <p>Adapter: <span class="font-semibold">USB</span></p>
-  <app-app-button color="blue">Reconnect</app-app-button>
+  <p>
+    Adapter: <span class="font-semibold">{{ settings.adapter$() }}</span>
+  </p>
+  <app-button color="blue">Reconnect</app-button>
 </section>
 
 <section class="mb-6">
   <h3 class="text-lg font-medium mb-2">Polling Rate</h3>
-  <select class="border rounded px-2 py-1">
-    <option>1 second</option>
-    <option>2 seconds</option>
-    <option>5 seconds</option>
+  <select
+    class="border rounded px-2 py-1"
+    [ngModel]="settings.pollingRate$()"
+    (ngModelChange)="settings.setPollingRate($event)"
+  >
+    <option [value]="1000">1 second</option>
+    <option [value]="2000">2 seconds</option>
+    <option [value]="5000">5 seconds</option>
   </select>
 </section>
 
 <section class="mb-6">
   <h3 class="text-lg font-medium mb-2">Units</h3>
-  <label class="block"> <input type="checkbox" /> Use Metric (km/h, °C) </label>
+  <select
+    class="border rounded px-2 py-1"
+    [ngModel]="settings.units$()"
+    (ngModelChange)="settings.setUnits($event)"
+  >
+    <option value="metric">Metric (km/h, °C)</option>
+    <option value="imperial">Imperial (mph, °F)</option>
+  </select>
 </section>
 
 <section class="mb-6">

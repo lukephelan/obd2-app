@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 
 @Component({
-  selector: 'app-app-button',
+  selector: 'app-button',
   imports: [NgClass],
   templateUrl: './app-button.component.html',
   styleUrl: './app-button.component.css',
