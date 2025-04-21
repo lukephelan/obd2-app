@@ -1,0 +1,9 @@
+<h2 class="text-2xl font-semibold mb-4">Live Sensor Data</h2>
+
+<ul class="space-y-2">
+  <li>RPM: {{ obd.rpm() }}</li>
+  <li>Speed: {{ obd.speed() }} km/h</li>
+  <li>Voltage: {{ obd.voltage().toFixed(1) }} V</li>
+  <li>Coolant Temp: {{ obd.coolantTemp() | number : '1.1-1' }} °C</li>
+  <li>Throttle: {{ obd.throttle() }} %</li>
+</ul>
