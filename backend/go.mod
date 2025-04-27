@@ -1,6 +1,8 @@
 module github.com/lukephelan/obd2-app/backend
 
-go 1.23.5
+go 1.23.0
+
+toolchain go1.23.5
 
 require (
 	github.com/jroimartin/gocui v0.5.0

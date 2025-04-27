@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - 8080:8080
+    networks:
+      - obd2-net
+    devices:
+      - /dev/tty.usbserial-A79B4CMW:/dev/ttyUSB0
+    privileged: true
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "4200:80"
+    networks:
+      - obd2-net
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_URL=http://backend:8080
+
+networks:
+  obd2-net:
+    driver: bridge
