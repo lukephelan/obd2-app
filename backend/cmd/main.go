@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/jroimartin/gocui"
@@ -112,7 +113,38 @@ func keybindings(g *gocui.Gui) error {
 	return nil
 }
 
+func enableCORS(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
+
+func startHTTPServer() {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/api/hello", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(`{"message": "Hello from OBD2 TUI!"}`))
+	})
+
+	log.Println("Starting HTTP server on :8080")
+	if err := http.ListenAndServe(":8080", enableCORS(mux)); err != nil {
+		log.Fatal("HTTP server failed:", err)
+	}
+}
+
 func main() {
+	// Can remove separate go routine once we remove TUI functionality
+	go startHTTPServer()
+
 	// Try connecting to the OBD2 adapter
 	var err error
 	adapter, err = obd2.NewAdapter("/dev/tty.usbserial-A79B4CMW") // FIXME: Need a reusable solution for setting portName
